@@ -6,11 +6,12 @@ class Carte :
 
     for i in self.valeur:
         for j in self.couleur:
-            dico =
+            dico = {}
             
         
 
     
         
+
 
 
