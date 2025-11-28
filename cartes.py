@@ -76,6 +76,14 @@ class Pile:
         pass
 
 
+class Joueur :
+    pass
+
+    def deck():
+        deck = []
+        cartes.depiler(deck)*2
+
+
 from random import *
 
 
@@ -99,6 +107,7 @@ print(jeu1)
 
     
         
+
 
 
 
