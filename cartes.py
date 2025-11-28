@@ -1,18 +1,12 @@
-class Carte :
-    def __init__(self):
-        self.valeur = ["As", "Roi", "Dame", "Valet", "10", "9", "8", "7", "6", "5", "4", "3", "2"]
-        self.couleur = ["Pique", "Coeur", "Carreau", "Trèfle"]
-        self.valeur_jeu = [11, 10, 10, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2]
-
 class Pile:
     #1.
     def __init__(self):
-        self.valeurs=[]
+        self.valeurs = []
         
     def affiche(self):
         '''Affiche le contenu de la pile'''
-        n=len(self.valeurs)
-        if n==0:
+        n = len(self.valeurs)
+        if n == 0:
             print('| |')
         else:
             for i in range(n):
@@ -25,7 +19,7 @@ class Pile:
         '''renvoie True si la pile est vide,
         False sinon'''
         n=len(self.valeurs)
-        if n==0 :
+        if n == 0 :
             return True
         else :
             return False
@@ -46,7 +40,7 @@ class Pile:
         '''Supprime l'élément placé au sommet de la pile
         A condition qu'elle soit non vide.
         Renvoie l'élément supprimé.'''
-        assert len(self.valeurs)!=0,'La liste est vide'
+        assert len(self.valeurs) != 0,'La liste est vide'
         return self.valeurs.pop()
         
         
@@ -58,7 +52,7 @@ class Pile:
         '''Renvoie la valeur du sommet de la pile
         si elle est n'est pas vide
         (sans la retirer)'''
-        assert len(self.valeurs)!=0,'La liste est vide'
+        assert len(self.valeurs) != 0,'La liste est vide'
         return self.valeurs[-1]
         
         
@@ -76,7 +70,7 @@ class Pile:
     #7.
     def vider(self):
         '''Vide la pile'''
-        self.valeurs=[]
+        self.valeurs = []
         
         
         pass
@@ -85,7 +79,8 @@ class Pile:
 from random import *
 
 
-cartes=[i+j for i in ['2','3','4','5','6','7','8','9','10','V','D','R','A'] for j in ["♠","♥","♦","♣"]]
+cartes = [i + j for i in ['2','3','4','5','6','7','8','9','10','V','D','R','A'] for j in ["♠","♥","♦","♣"]]
+cartes = cartes*8
 shuffle(cartes)
 
 #le jeu est une pile
@@ -97,11 +92,14 @@ print()
 #distribution des cartes (piles)
 jeu1=Pile()
 jeu2=Pile()
+
+print(jeu1)
             
         
 
     
         
+
 
 
 
