@@ -77,11 +77,15 @@ class Pile:
 
 
 class Joueur :
-    pass
+    def __init__(self,nom,argent,position):
+        self.nom = nom
+        self.argent = argent
+        self.position = position
 
     def deck():
         deck = []
-        cartes.depiler(deck)*2
+        
+        
 
 
 from random import *
@@ -91,22 +95,9 @@ cartes = [i + j for i in ['2','3','4','5','6','7','8','9','10','V','D','R','A'] 
 cartes = cartes*8
 shuffle(cartes)
 
-#le jeu est une pile
+
 jeu=Pile()
 jeu.valeurs=cartes
-jeu.affiche()
-print()
-
-#distribution des cartes (piles)
-jeu1=Pile()
-jeu2=Pile()
-
-print(jeu1)
-            
-        
-
-    
-        
 
 
 
