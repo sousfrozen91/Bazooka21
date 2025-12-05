@@ -2,6 +2,7 @@ class Pile:
     #1.
     def __init__(self):
         self.valeurs = []
+        self.player = []
         
     def affiche(self):
         '''Affiche le contenu de la pile'''
@@ -79,11 +80,23 @@ class Pile:
 class Joueur :
     def __init__(self,nom,argent,position):
         self.nom = nom
-        self.argent = argent
+        self.argent = 1000
         self.position = position
 
     def deck():
         deck = []
+    
+    def money():
+        
+        
+        
+class Manche:
+    def __init__(self,)
+
+        
+
+        
+        
         
         
 
@@ -98,6 +111,10 @@ shuffle(cartes)
 
 jeu=Pile()
 jeu.valeurs=cartes
+
+
+
+
 
 
 
