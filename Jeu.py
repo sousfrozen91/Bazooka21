@@ -23,15 +23,13 @@ class Pile:
             return True
         else :
             return False
-        
-        
+
         pass
     
     
     def empiler(self,a):
         # Place l'élément a au sommet de la pile 
         self.valeurs.append(a)
-        
         
         pass
     
@@ -41,24 +39,19 @@ class Pile:
         assert len(self.valeurs) != 0,'La liste est vide'
         return self.valeurs.pop()
         
-        
-        
         pass
     
     def sommet(self):
         # Renvoie la valeur du sommet de la pile si elle est n'est pas vide (sans la retirer)
         assert len(self.valeurs) != 0,'La liste est vide'
         return self.valeurs[-1]
-        
-        
-        
+            
         pass
     
     
     def longueur(self):
         # Renvoie le nombre d'élément dans la pile
         return len(self.valeurs)
-        
         
         pass
     
@@ -67,10 +60,9 @@ class Pile:
         # Vide la pile
         self.valeurs = []
         
-        
         pass
 
-
+#-------------------------------------------------------------------------------
 class Joueur :
     def __init__(self,nom,argent,position):
         self.nom = nom
@@ -79,13 +71,11 @@ class Joueur :
 
     def deck():
         deck = []
-        
+
  
-
 # Création du jeu de carte
-
 cartes = [i + j for i in ['2','3','4','5','6','7','8','9','10','V','D','R','A'] for j in ["♠","♥","♦","♣"]]
-cartes = cartes*8
+cartes = cartes*8    # 8 jeux
 shuffle(cartes)
 
 
@@ -93,9 +83,9 @@ jeu=Pile()
 jeu.valeurs=cartes
 
 
-#
+# Fonctions
 def valeur_carte(c):
-    v = c[:-1]     # Valeur sans symbole
+    v = c[0]     # Valeur sans symbole
     if v in ["V", "D", "R"]:
         return 10
     if v == "A":
@@ -109,10 +99,10 @@ def valeur_main(main):
     for carte in main:
         v = valeur_carte(carte)
         total += v
-        if carte[:-1] == "A":
-            as_count += 1
+        if v[0] == "A":       
+            as_count += 1    #Compteur As
 
-    # Ajustement pour les As
+    # Ajustement pour les As (11 ou 1)
     while total > 21 and as_count > 0:
         total -= 10
         as_count -= 1
@@ -121,10 +111,3 @@ def valeur_main(main):
     
 def tirer_carte():
     return jeu.depiler()
-    
-
-def afficher_main(nom, main, cacher=False):
-    if cacher:
-        print(f"{nom}: [??] " + " ".join(main[1:]))
-    else:
-        print(f"{nom}: {' '.join(main)}  (Total: {valeur_main(main)})")
