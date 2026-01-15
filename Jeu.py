@@ -111,3 +111,63 @@ def valeur_main(main):
     
 def tirer_carte():
     return jeu.depiler()
+
+def afficher_main(nom, main, cacher=False):
+    if cacher:
+        print(f"{nom}: [??] " + " ".join(main[1:]))
+    else:
+        print(f"{nom}: {' '.join(main)}  (Total: {valeur_main(main)})")
+
+
+
+# Jeu
+
+def jouer_blackjack():
+    print("\n=== DÉBUT DU BLACKJACK ===")
+
+    # Distribution
+    joueur_main = [tirer_carte(), tirer_carte()]
+    croupier_main = [tirer_carte(), tirer_carte()]
+
+    afficher_main("Croupier", croupier_main, cacher=True)
+    afficher_main("Vous", joueur_main)
+
+    # Tour du joueur 
+    while True:
+        choix = input("Tirer une carte ? (o/n) : ").lower()
+        if choix == "o":
+            joueur_main.append(tirer_carte())
+            afficher_main("Vous", joueur_main)
+            if valeur_main(joueur_main) > 21:
+                print("💥 Vous dépassez 21 ! Perdu.")
+                return
+        else:
+            break
+
+    # --- Tour du croupier ---
+    print("\n--- Tour du croupier ---")
+    afficher_main("Croupier", croupier_main)
+
+    while valeur_main(croupier_main) < 17:
+        croupier_main.append(tirer_carte())
+        afficher_main("Croupier", croupier_main)
+
+    # --- Résultat ---
+    score_j = valeur_main(joueur_main)
+    score_c = valeur_main(croupier_main)
+
+    print("\n=== RÉSULTAT ===")
+    if score_j > 21:
+        print("Vous perdez.")
+    elif score_c > 21 or score_j > score_c:
+        print("Vous gagnez !")
+    elif score_j == score_c:
+        print("Égalité.")
+    else:
+        print("Croupier gagne.")
+
+
+# Lancer le jeu
+
+jouer_blackjack()
+
