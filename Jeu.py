@@ -139,7 +139,7 @@ def jouer_blackjack():
             joueur_main.append(tirer_carte())
             afficher_main("Vous", joueur_main)
             if valeur_main(joueur_main) > 21:
-                print("💥 Vous dépassez 21 ! Perdu.")
+                print("Vous dépassez 21 ! Perdu.")
                 return
         else:
             break
@@ -170,4 +170,5 @@ def jouer_blackjack():
 # Lancer le jeu
 
 jouer_blackjack()
+
 
