@@ -42,7 +42,7 @@ class Joueur:
 
 
 
-# Création du jeu de cartes
+# Création du jeux de cartes
 
 cartes = [i + j for i in ['2','3','4','5','6','7','8','9','10','V','D','R','A']
           for j in ["♠","♥","♦","♣"]]
@@ -143,4 +143,5 @@ def jouer_blackjack():
 # Lancer le jeu
 
 jouer_blackjack()
+
 
