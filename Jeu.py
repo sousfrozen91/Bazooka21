@@ -76,10 +76,7 @@ class Joueur :
         self.position = position
 
     def deck():
-        deck1 = cartes.depiler*2
-        deck2 = cartes.depiler*2
-        deck3 = cartes.depiler*2
-        deck4 = cartes.depiler*2
+        deck = []
 
 
 jeu=Pile()
@@ -173,6 +170,7 @@ def jouer_blackjack():
 # Lancer le jeu
 
 jouer_blackjack()
+
 
 
 
