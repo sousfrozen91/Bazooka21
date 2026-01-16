@@ -1,11 +1,10 @@
 from random import *
 
-class Pile:
+class Pile: 
     def __init__(self):
         self.valeurs = []
         
     def affiche(self):
-        # Affiche le contenu de la pile
         n = len(self.valeurs)
         if n == 0:
             print('| |')
@@ -14,84 +13,58 @@ class Pile:
                 print('|'+ str(self.valeurs[n-1-i]) + '|')
         print('‾‾‾')
             
-    
-    
     def est_vide(self):
-        # Renvoie True si la pile est vide, False sinon
-        n=len(self.valeurs)
-        if n == 0 :
-            return True
-        else :
-            return False
-
-        pass
+        return len(self.valeurs) == 0
     
-    
-    def empiler(self,a):
-        # Place l'élément a au sommet de la pile 
+    def empiler(self, a):
         self.valeurs.append(a)
-        
-        pass
-    
     
     def depiler(self):
-        # Supprime l'élément placé au sommet de la pile A condition qu'elle soit non vide. Renvoie l'élément supprimé.
-        assert len(self.valeurs) != 0,'La liste est vide'
+        assert len(self.valeurs) != 0, 'La liste est vide'
         return self.valeurs.pop()
-        
-        pass
     
     def sommet(self):
-        # Renvoie la valeur du sommet de la pile si elle est n'est pas vide (sans la retirer)
-        assert len(self.valeurs) != 0,'La liste est vide'
+        assert len(self.valeurs) != 0, 'La liste est vide'
         return self.valeurs[-1]
-            
-        pass
-    
     
     def longueur(self):
-        # Renvoie le nombre d'élément dans la pile
         return len(self.valeurs)
-        
-        pass
-    
     
     def vider(self):
-        # Vide la pile
         self.valeurs = []
-        
-        pass
 
-#------------------------------------------------------------------------------
- 
-# Création du jeu de carte
-cartes = [i + j for i in ['2','3','4','5','6','7','8','9','10','V','D','R','A'] for j in ["♠","♥","♦","♣"]]
-cartes = cartes*8    # 8 jeux
-shuffle(cartes)
 
-class Joueur :
-    def __init__(self,nom,argent,position):
+class Joueur:
+    def __init__(self, nom, argent, position):
         self.nom = nom
         self.argent = argent
         self.position = position
 
-    def deck():
-        deck = []
 
 
-jeu=Pile()
-jeu.valeurs=cartes
+# Création du jeu de cartes
+
+cartes = [i + j for i in ['2','3','4','5','6','7','8','9','10','V','D','R','A']
+          for j in ["♠","♥","♦","♣"]]
+
+cartes = cartes * 8  
+shuffle(cartes)
+
+jeu = Pile()
+jeu.valeurs = cartes
 
 
-# Fonctions
+
+# Fonctions du Blackjack
+
 def valeur_carte(c):
-    v = c[0]     # Valeur sans symbole
+    v = c[:-1]  # valeur sans le symbole
     if v in ["V", "D", "R"]:
         return 10
     if v == "A":
         return 11
     return int(v)
-    
+
 def valeur_main(main):
     total = 0
     as_count = 0
@@ -99,16 +72,16 @@ def valeur_main(main):
     for carte in main:
         v = valeur_carte(carte)
         total += v
-        if v[0] == "A":       
-            as_count += 1    #Compteur As
+        if carte[:-1] == "A":
+            as_count += 1
 
-    # Ajustement pour les As (11 ou 1)
+    # Ajustement pour les As
     while total > 21 and as_count > 0:
         total -= 10
         as_count -= 1
-        
-    return total    
     
+    return total
+
 def tirer_carte():
     return jeu.depiler()
 
@@ -139,12 +112,12 @@ def jouer_blackjack():
             joueur_main.append(tirer_carte())
             afficher_main("Vous", joueur_main)
             if valeur_main(joueur_main) > 21:
-                print("Vous dépassez 21 ! Perdu.")
+                print(" Vous dépassez 21 ! Perdu.")
                 return
         else:
             break
 
-    # --- Tour du croupier ---
+    # Tour du croupier
     print("\n--- Tour du croupier ---")
     afficher_main("Croupier", croupier_main)
 
@@ -152,7 +125,7 @@ def jouer_blackjack():
         croupier_main.append(tirer_carte())
         afficher_main("Croupier", croupier_main)
 
-    # --- Résultat ---
+    # Résultat
     score_j = valeur_main(joueur_main)
     score_c = valeur_main(croupier_main)
 
@@ -170,7 +143,4 @@ def jouer_blackjack():
 # Lancer le jeu
 
 jouer_blackjack()
-
-
-
 
