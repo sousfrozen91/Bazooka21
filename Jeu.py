@@ -62,7 +62,13 @@ class Pile:
         
         pass
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+ 
+# Création du jeu de carte
+cartes = [i + j for i in ['2','3','4','5','6','7','8','9','10','V','D','R','A'] for j in ["♠","♥","♦","♣"]]
+cartes = cartes*8    # 8 jeux
+shuffle(cartes)
+
 class Joueur :
     def __init__(self,nom,argent,position):
         self.nom = nom
@@ -70,13 +76,10 @@ class Joueur :
         self.position = position
 
     def deck():
-        deck = []
-
- 
-# Création du jeu de carte
-cartes = [i + j for i in ['2','3','4','5','6','7','8','9','10','V','D','R','A'] for j in ["♠","♥","♦","♣"]]
-cartes = cartes*8    # 8 jeux
-shuffle(cartes)
+        deck1 = cartes.depiler*2
+        deck2 = cartes.depiler*2
+        deck3 = cartes.depiler*2
+        deck4 = cartes.depiler*2
 
 
 jeu=Pile()
@@ -170,5 +173,6 @@ def jouer_blackjack():
 # Lancer le jeu
 
 jouer_blackjack()
+
 
 
