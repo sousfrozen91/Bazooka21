@@ -157,7 +157,7 @@ joueur_info.grid(row=0, column=0, columnspan=2, pady=10)
 
 # Action quand bouton cliqué
 '''def bouton_clique(action):
-    joueur_info.config(text=f"Joueur 1   💰 1000 — {action}")'''
+    joueur_info.config(text=f"Joueur 1   💰 1000 — {action}")''' 
 
 # Boutons
 btn_style = {
@@ -202,53 +202,39 @@ photo = ImageTk.PhotoImage(image)
 label = tk.Label(table_frame, image=photo)
 label.image = photo 
 label.pack()    
-     
-# Jeu
-def jouer_blackjack():
+ 
+etat = "joueur"
+joueur_main = []
+croupier_main = []
 
-    # Distribution des cartes
+joueur_main.append(tirer_carte())
+if valeur_main(joueur_main) > 21:
+    print("Perdu !")
+
+def action_tirer():
+    if etat != "joueur":
+        return
+    joueur_main.append(tirer_carte())
+
+    maj_affichage()
+
+    if valeur_main(joueur_main) > 21:
+        fin_partie("Perdu !")
+        
+
+def partie():
+    global joueur_main, croupier_main, etat
     joueur_main = [tirer_carte(), tirer_carte()]
     croupier_main = [tirer_carte(), tirer_carte()]
+    etat = "joueur"
+    maj_affichage()
 
-    afficher_main("Croupier", croupier_main, cacher=True)
-    afficher_main("Vous", joueur_main)
+ 
+def maj_affichage():
+    jeu_label.config(
+        text=f"Vous : {valeur_main(joueur_main)} | "f"Croupier : {valeur_main(croupier_main) if etat=='fin' else '??'}")
 
-    # Tour du joueur 
-    while True:
-        jeu_label['text'] = 'Que voulez vous faire ?'
-        
-        if buttonClicked == True:
-            jeu_label['text'] = "Vous avez tiré"
-            joueur_main.append(tirer_carte())
-            
-            afficher_main("Vous", joueur_main)
-            if valeur_main(joueur_main) > 21:
-                print(" Vous dépassez 21 ! Perdu.")
-                return
-        else:
-            break
-
-    # Tour du croupier
-    print("\n--- Tour du croupier ---")
-    afficher_main("Croupier", croupier_main)
-
-    while valeur_main(croupier_main) < 17:
-        croupier_main.append(tirer_carte())
-        afficher_main("Croupier", croupier_main)
-
-    # Scores
-    score_j = valeur_main(joueur_main)
-    score_c = valeur_main(croupier_main)
-
-    print("\n=== RÉSULTAT ===")
-    if score_j > 21:
-        print("Vous perdez.")
-    elif score_c > 21 or score_j > score_c:
-        print("Vous gagnez !")
-    elif score_j == score_c:
-        print("Égalité.")
-    else:
-        print("Croupier gagne.")
+ 
 
 
 # Lancer le jeu
