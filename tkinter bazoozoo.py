@@ -38,16 +38,6 @@ class Pile:
         self.valeurs = []
 
 
-# Pas utiliser pour le moment, plus tard pour ajouter mises 
-'''
-class Joueur:
-    def __init__(self, nom, argent, position):
-        self.nom = nom
-        self.argent = argent
-        self.position = position
-'''
-
-
 # Création du jeux de cartes
 cartes = [i + j for i in ['2','3','4','5','6','7','8','9','10','V','D','R','A']
           for j in ["♠","♥","♦","♣"]]
@@ -63,20 +53,8 @@ jeu.valeurs = cartes
 # Fonctions du Blackjack
 
 def convertir_nom(carte):
-    valeur = carte[:-1]
-    symbole = carte[-1]
+    return carte
 
-    correspondance = {
-        "A": "1",
-        "V": "11",
-        "D": "12",
-        "R": "13"
-    }
-
-    if valeur in correspondance:
-        valeur = correspondance[valeur]
-
-    return valeur + symbole
 
 
 def valeur_carte(c):
@@ -184,10 +162,6 @@ joueur_info = tk.Label(
 )
 joueur_info.grid(row=0, column=0, columnspan=2, pady=10)
 
-# Action quand bouton cliqué
-'''def bouton_clique(action):
-    joueur_info.config(text=f"Joueur 1   💰 1000 — {action}")''' 
-
 # Boutons
 btn_style = {
     "font": ("Arial", 20, "bold"),
@@ -289,48 +263,39 @@ tk.Button(
 
 
 def maj_affichage():
-    # Nettoyer la table
+    # Nettoyer la table avant d'afficher
     for widget in table_frame.winfo_children():
         widget.destroy()
 
-    # -------- Joueur --------
-    for i, carte in enumerate(joueur_main):
-        nom_image = convertir_nom(carte)
-        image = images_cartes[nom_image]
+    # -------- Affichage des cartes du joueur --------
+    for i, carte in enumerate(joueur_main):          
+        image = images_cartes[carte]
 
-        lbl = tk.Label(
-            table_frame,
-            image=image,
-            bg="#0b5d1e"
-        )
-        lbl.image = image  # garder référence
-        lbl.place(x=300 + i*130, y=400)
+        lbl = tk.Label(table_frame, image=image, bg="#0b5d1e")
+        lbl.image = image  # garder la référence pour Tkinter
+        lbl.place(x=300 + i*130, y=400)  # décale horizontalement les cartes du joueur
 
-    # -------- Croupier --------
+    # -------- Affichage des cartes du croupier --------
     for i, carte in enumerate(croupier_main):
         if etat != "fin" and i == 1:
-            image = images_cartes["dos"]  # carte dos cachée
+            image = images_cartes["dos"]  # cache la deuxième carte tant que le jeu n'est pas fini
         else:
-            nom_image = convertir_nom(carte)
-            image = images_cartes[nom_image]
+            image = images_cartes[carte]
 
-        lbl = tk.Label(
-            table_frame,
-            image=image,
-            bg="#0b5d1e"
-        )
+        lbl = tk.Label(table_frame, image=image, bg="#0b5d1e")
         lbl.image = image
-        lbl.place(x=300 + i*130, y=100)
+        lbl.place(x=300 + i*130, y=100)  # décale horizontalement les cartes du croupier
 
-    # Score
+    # -------- Affichage du score --------
     if etat == "fin":
         texte_croupier = valeur_main(croupier_main)
     else:
         texte_croupier = "??"
-
+    
     jeu_label.config(
         text=f"Vous : {valeur_main(joueur_main)} | Croupier : {texte_croupier}"
     )
+
 
 
 
