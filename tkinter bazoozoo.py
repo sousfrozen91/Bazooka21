@@ -1,4 +1,5 @@
 import tkinter as tk
+import os 
 from random import *
 from PIL import Image, ImageTk
 
@@ -60,6 +61,23 @@ jeu.valeurs = cartes
 
 
 # Fonctions du Blackjack
+
+def convertir_nom(carte):
+    valeur = carte[:-1]
+    symbole = carte[-1]
+
+    correspondance = {
+        "A": "1",
+        "V": "11",
+        "D": "12",
+        "R": "13"
+    }
+
+    if valeur in correspondance:
+        valeur = correspondance[valeur]
+
+    return valeur + symbole
+
 
 def valeur_carte(c):
     v = c[:-1]         # Valeur sans le symbole
@@ -132,6 +150,26 @@ jeu_label.pack(pady=60)
 table_frame = tk.Frame(root, bg="#0b5d1e")
 table_frame.grid(row=1, column=0, sticky="nsew")
 
+def charger_images():
+    dossier = "cartes"
+    for fichier in os.listdir(dossier):
+        if fichier.lower().endswith(".png"):
+
+            nom_carte = fichier.replace(".PNG", "").replace(".png", "")
+            chemin = os.path.join(dossier, fichier)
+
+            img = Image.open(chemin)
+            img = img.resize((120, 180))
+            photo = ImageTk.PhotoImage(img)
+
+            images_cartes[nom_carte] = photo
+
+
+images_cartes = {}
+charger_images()
+
+
+
 # ---------------- JOUEUR ----------------
 joueur_frame = tk.Frame(root, bg="#111")
 joueur_frame.grid(row=2, column=0, sticky="nsew")
@@ -185,7 +223,7 @@ def bouton_clique(action):
 
   
 #afficher une image 
-image = Image.open("U:/NSI/Bazooka21/dos de carte.png")
+image = Image.open("U:\\NSI\\Bazooka21\\cartes\\dos.png")
 image = image.resize((200, 300))
 
 photo = ImageTk.PhotoImage(image)
@@ -226,7 +264,7 @@ tk.Button(
 def nouvelle_partie():
     global joueur_main, croupier_main, etat
 
-    # Sécurité : reshuffle si le paquet est presque vide
+    # Sécurité : re mélange si le paquet est presque vide
     if jeu.longueur() < 20:
         jeu.vider()
         cartes = [i + j for i in ['2','3','4','5','6','7','8','9','10','V','D','R','A']
@@ -251,8 +289,50 @@ tk.Button(
 
 
 def maj_affichage():
+    # Nettoyer la table
+    for widget in table_frame.winfo_children():
+        widget.destroy()
+
+    # -------- Joueur --------
+    for i, carte in enumerate(joueur_main):
+        nom_image = convertir_nom(carte)
+        image = images_cartes[nom_image]
+
+        lbl = tk.Label(
+            table_frame,
+            image=image,
+            bg="#0b5d1e"
+        )
+        lbl.image = image  # garder référence
+        lbl.place(x=300 + i*130, y=400)
+
+    # -------- Croupier --------
+    for i, carte in enumerate(croupier_main):
+        if etat != "fin" and i == 1:
+            image = images_cartes["dos"]  # carte dos cachée
+        else:
+            nom_image = convertir_nom(carte)
+            image = images_cartes[nom_image]
+
+        lbl = tk.Label(
+            table_frame,
+            image=image,
+            bg="#0b5d1e"
+        )
+        lbl.image = image
+        lbl.place(x=300 + i*130, y=100)
+
+    # Score
+    if etat == "fin":
+        texte_croupier = valeur_main(croupier_main)
+    else:
+        texte_croupier = "??"
+
     jeu_label.config(
-        text=f"Vous : {valeur_main(joueur_main)} | "f"Croupier : {valeur_main(croupier_main) if etat=='fin' else '?? + ' + str(valeur_carte(croupier_main[0])) }")
+        text=f"Vous : {valeur_main(joueur_main)} | Croupier : {texte_croupier}"
+    )
+
+
 
 def fin_partie(message):
     global etat
@@ -262,4 +342,3 @@ def fin_partie(message):
 # Lancement
 nouvelle_partie()
 root.mainloop()
-
